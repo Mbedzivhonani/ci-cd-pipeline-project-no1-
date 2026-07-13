@@ -1,4 +1,4 @@
-from calculator import import add
+from calculator  import add
 
 def test_addition():
     # This checks if 2 + 3 equals 5
