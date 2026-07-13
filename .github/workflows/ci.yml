@@ -1,18 +1,33 @@
-name: Simple CI Pipeline
+name: Python Test CI Pipeline
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+push:
+branches: [ "main" ]
+pull_request:
+branches: [ "main" ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+run-tests:
+runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout repository code
-      uses: actions/checkout@v4
+steps:
+# Step 1: Copy the repository files onto the Ubuntu server
+- name: Check out repository code
+uses: actions/checkout@v4
 
-    - name: Run a quick health check
-      run: echo "Code checked out successfully. Your CI pipeline is active!"
+# Step 2: Set up Python on the Ubuntu server
+- name: Set up Python
+
+uses: actions/setup-python@v5
+with:
+python-version: '3.10'
+
+# Step 3: Install pytest (the testing framework)
+- name: Install dependencies
+run: |
+python -m pip upgrade pip
+pip install pytest
+
+# Step 4: Run the automated tests
+- name: Run automated tests with pytest
+run: pytest
